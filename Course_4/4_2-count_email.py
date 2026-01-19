@@ -10,8 +10,8 @@ cur.execute('CREATE TABLE Counts (org TEXT, count INTEGER)')
 fname = input('Enter file name: ')
 if (len(fname) < 1): fname = 'assets/mbox.txt'
 fh = open(fname)
-orgs = re.findall('From:.*\\S+?@(\\S+)', fh.read())
 
+orgs = re.findall('^From:.*\\S+?@(\\S+)', fh.read(), flags=re.MULTILINE)
 for org in orgs:    
     cur.execute('SELECT count FROM Counts WHERE org = ? ', (org,))
     row = cur.fetchone()
